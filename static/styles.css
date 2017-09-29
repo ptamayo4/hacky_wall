@@ -1,0 +1,25 @@
+.wrapper{
+  width: 90%;
+  border: 2px solid green;
+  border-radius: 5px;
+  margin: auto;
+  height: 90%;
+}
+
+.message{
+  /*border: 1px solid green;*/
+  margin: 20px;
+}
+
+.message > p{
+  margin-left: 10px;
+}
+
+.comment{
+  margin-left: 60px;
+  /*border: 1px solid black;*/
+}
+
+.comment_post{
+  margin-left: 80px;
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Wall</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>The Wall</h1>
+      <h2>Welcome {{session['id']['first_name']}}</h2>
+      <form action='/logout' method='POST'>
+        <input type="submit" value="Log Out">
+      </form>
+
+      <div class="messages_post">
+        <form action="/message" method="post">
+          <h3>Post A Message</h3>
+          <textarea name="message" rows="8" cols="100"></textarea>
+          <input type="submit" name="" value="Submit">
+        </form>
+      </div>
+
+      <div class="messages_display">
+        {% for message in messages %}
+          <div class="message">
+            <h3>{{message['first_name']}} {{ message['last_name']}}  -  {{message['created_at']}}</h3>
+            <p>{{message['message']}}</p>
+            {% if message['user_id'] == session['id']['id'] %}
+            <form action="/delete" method="post">
+              <input type="hidden" name="message_id" value="{{message['id']}}">
+              <input type="submit" value="Delete">
+            </form>
+            {% endif %}
+            {% for comment in comments %}
+              {% if comment['message_id'] == message['id'] %}
+                <div class="comment">
+                  <h4>{{comment['first_name']}} {{comment['last_name']}}</h4>
+                  <p>{{comment['comment']}}</p>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="comment_post">
+            <form action="/comment" method="post">
+              <h4>Add a Comment</h4>
+              <input type="hidden" name="message_id" value="{{message['id']}}">
+              <textarea name="comment" rows="4" cols="40"></textarea>
+              <input type="submit" value="Add Comment">
+            </form>
+          </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </body>
+</html>
